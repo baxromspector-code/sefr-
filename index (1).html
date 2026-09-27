@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <title>English CEFR — Ingliz tili o‘rganish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#2563EB;--primary-dark:#1D4ED8;--primary-soft:#EFF6FF;
+      --text:#172033;--muted:#64748B;--border:#E2E8F0;--card:#F8FAFC;
+      --success:#15803D;--success-bg:#F0FDF4;--danger:#DC2626;--danger-bg:#FEF2F2;
+      --white:#fff;--shadow:0 10px 30px rgba(15,23,42,.07);--radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:#fff;color:var(--text);font-family:Inter,system-ui,sans-serif}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{min-height:100vh}
+    .topbar{height:68px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);z-index:20}
+    .brand{font-weight:800;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+    .brand-mark{width:28px;height:28px;border-radius:8px;background:var(--primary);position:relative}
+    .brand-mark:before,.brand-mark:after{content:"";position:absolute;background:#fff;border-radius:2px}
+    .brand-mark:before{width:12px;height:4px;left:8px;top:8px}.brand-mark:after{width:8px;height:4px;left:8px;top:16px}
+    .level-badge{display:none;border:1px solid #BFDBFE;background:var(--primary-soft);color:var(--primary);padding:7px 11px;border-radius:999px;font-size:13px;font-weight:800}
+    main{max-width:1040px;margin:0 auto;padding:28px 18px 60px}
+    .screen{display:none;animation:fade .25s ease}.screen.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .hero{text-align:center;padding:54px 10px 28px}
+    .eyebrow{color:var(--primary);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+    h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:12px 0;color:#0F172A;letter-spacing:-1.5px}
+    h2{font-size:28px;margin:0 0 9px;letter-spacing:-.7px}
+    h3{margin:0 0 8px}
+    p{line-height:1.65}.muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .narrow{max-width:760px;margin:0 auto}
+    .progress{height:8px;background:#E5E7EB;border-radius:99px;overflow:hidden;margin:18px 0 25px}
+    .progress>span{height:100%;display:block;background:var(--primary);transition:width .3s}
+    .question-number{font-size:13px;font-weight:800;color:var(--primary);margin-bottom:8px}
+    .question{font-size:22px;font-weight:700;line-height:1.4;margin:0 0 18px}
+    .options{display:grid;gap:10px}
+    .option{border:1px solid var(--border);background:#fff;border-radius:13px;padding:14px 15px;text-align:left;transition:.18s}
+    .option:hover{border-color:#93C5FD;background:var(--primary-soft)}
+    .option.selected{border-color:var(--primary);background:var(--primary-soft)}
+    .option.correct{border-color:#86EFAC;background:var(--success-bg);color:var(--success)}
+    .option.wrong{border-color:#FCA5A5;background:var(--danger-bg);color:var(--danger)}
+    .option:disabled{cursor:default}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+    .btn{border:0;border-radius:12px;padding:12px 17px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    .btn.primary{background:var(--primary);color:#fff}.btn.primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;color:var(--text);border:1px solid var(--border)}.btn.secondary:hover{border-color:#93C5FD}
+    .btn.full{width:100%}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:25px}
+    .menu-card{text-align:left;background:#fff;border:1px solid var(--border);border-radius:18px;padding:25px;transition:.2s}
+    .menu-card:hover{border-color:#93C5FD;box-shadow:var(--shadow);transform:translateY(-2px)}
+    .icon{width:42px;height:42px;border-radius:12px;background:var(--primary-soft);position:relative;margin-bottom:18px}
+    .icon:before,.icon:after{content:"";position:absolute;background:var(--primary);border-radius:2px}
+    .icon.read:before{width:20px;height:15px;left:11px;top:13px;border:2px solid var(--primary);background:transparent}
+    .icon.read:after{width:2px;height:17px;left:20px;top:12px}
+    .icon.speak:before{width:20px;height:14px;left:10px;top:10px;border-radius:8px}
+    .icon.speak:after{width:7px;height:7px;left:11px;top:23px;transform:skew(-25deg)}
+    .menu-card h3{font-size:19px}.menu-card p{font-size:14px;color:var(--muted);margin:0}
+    .menu-actions{display:flex;justify-content:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .passage{font-family:Merriweather,serif;background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;line-height:1.9;margin:18px 0 24px}
+    .passage-title{font-family:Inter,sans-serif;font-weight:800;margin-bottom:8px}
+    .feedback{margin-top:16px;border-radius:13px;padding:15px;line-height:1.55}
+    .feedback.correct{background:var(--success-bg);border:1px solid #BBF7D0;color:#166534}
+    .feedback.wrong{background:var(--danger-bg);border:1px solid #FECACA;color:#991B1B}
+    .feedback.neutral{background:var(--primary-soft);border:1px solid #BFDBFE;color:#1E40AF}
+    .feedback strong{display:block;margin-bottom:4px}
+    .session-score{text-align:center;padding:28px 10px}
+    .big-score{font-size:52px;font-weight:800;color:var(--primary);margin:10px 0}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .stat{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+    .stat strong{font-size:24px;display:block}.stat span{font-size:12px;color:var(--muted)}
+    .wrong-list{display:grid;gap:10px;margin-top:14px}
+    .wrong-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px}
+    .wrong-item small{color:var(--muted);display:block;margin-top:4px}
+    .textarea{width:100%;min-height:145px;resize:vertical;border:1px solid var(--border);border-radius:13px;padding:14px;outline:none;background:#fff}
+    .textarea:focus{border-color:#60A5FA;box-shadow:0 0 0 3px #DBEAFE}
+    .translation{color:var(--muted);margin:0 0 18px;font-size:14px}
+    .checklist{display:grid;gap:9px;margin:15px 0}.check{padding:10px 12px;border-radius:10px;background:#fff;border:1px solid var(--border);font-size:14px}
+    .check.yes{color:var(--success);background:var(--success-bg);border-color:#BBF7D0}.check.no{color:var(--danger);background:var(--danger-bg);border-color:#FECACA}
+    .model{font-family:Merriweather,serif;background:#fff;border-left:4px solid var(--primary);padding:14px 16px;border-radius:0 10px 10px 0;line-height:1.75}
+    .bars{margin-top:20px}.bar-row{margin:15px 0}.bar-head{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:7px}
+    .bar{height:11px;background:#E5E7EB;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--primary);transition:width .5s}
+    .level-large{font-size:44px;font-weight:800;color:var(--primary);margin:4px 0 8px}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .mini-note{font-size:13px;color:var(--muted);margin-top:8px}
+    .empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:13px}
+    .top-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}
+    .hidden{display:none!important}
+    .select{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+    .gap-input{border:0;border-bottom:2px solid #94A3B8;background:transparent;padding:4px 7px;min-width:130px;outline:none}
+    .gap-input:focus{border-color:var(--primary)}
+    .review-box{margin-top:20px}
+    footer{text-align:center;color:#94A3B8;font-size:12px;margin-top:35px}
+    @media(max-width:700px){
+      .topbar{padding:0 14px}.brand{font-size:14px}main{padding:18px 13px 45px}
+      .hero{padding:35px 5px 20px}.menu-grid,.result-grid{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}
+      .card{padding:18px}.question{font-size:19px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"></span>English CEFR</div>
+    <span id="headerLevel" class="level-badge"></span>
+  </header>
+
+  <main>
+    <section id="placement" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">Boshlang‘ich baholash</div>
+        <h1>Ingliz tili darajangizni aniqlang</h1>
+        <p class="muted">10 ta savolga javob bering. Natijaga ko‘ra A1, A2 yoki B1 darajasi belgilanadi.</p>
+      </div>
+      <div class="card narrow">
+        <div class="question-number" id="placeCounter"></div>
+        <div class="progress"><span id="placeProgress"></span></div>
+        <div id="placeQuestion"></div>
+        <div id="placeOptions" class="options"></div>
+        <div id="placeFeedback"></div>
+        <div class="actions">
+          <button id="placeNext" class="btn primary" disabled>Keyingi savol</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="screen">
+      <div class="hero">
+        <div class="eyebrow">Asosiy menyu</div>
+        <h1>Bugun nimani mashq qilamiz?</h1>
+        <p id="welcomeText" class="muted"></p>
+      </div>
+      <div class="menu-grid">
+        <button class="menu-card" onclick="startReading()">
+          <span class="icon read"></span><h3>Reading mashqi</h3>
+          <p>Matn o‘qing, savollarga javob bering va tushunishni tekshiring.</p>
+        </button>
+        <button class="menu-card" onclick="startSpeaking()">
+          <span class="icon speak"></span><h3>Speaking mashqi</h3>
+          <p>Inglizcha javob yozing va CEFR uslubidagi fikr-mulohaza oling.</p>
+        </button>
+      </div>
+      <div class="menu-actions">
+        <button class="btn secondary" onclick="showProgress()">Mening natijalarim</button>
+        <button class="btn secondary" onclick="rerunPlacement()">Darajani qayta aniqlash</button>
+      </div>
+    </section>
+
+    <section id="reading" class="screen">
+      <div class="top-actions"><button class="btn secondary" onclick="showScreen('menu')">Orqaga</button><span class="muted" id="readingCounter"></span></div>
+      <div class="card">
+        <div class="eyebrow">Reading</div>
+        <h2 id="readingTitle"></h2>
+        <div id="readingPassage" class="passage"></div>
+        <div id="readingQuestion"></div>
+        <div id="readingOptions" class="options"></div>
+        <div id="readingFeedback"></div>
+        <div class="actions">
+          <button id="readingNext" class="btn primary" disabled>Keyingi savol</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="speaking" class="screen">
+      <div class="top-actions"><button class="btn secondary" onclick="showScreen('menu')">Orqaga</button><span class="muted" id="speakingCounter"></span></div>
+      <div class="card">
+        <div class="eyebrow">Speaking</div>
+        <h2 id="speakingPrompt"></h2>
+        <p id="speakingTranslation" class="translation"></p>
+        <textarea id="speakingAnswer" class="textarea" placeholder="Javobingizni ingliz tilida yozing..."></textarea>
+        <div class="actions"><button id="speakingSubmit" class="btn primary">Javobni tekshirish</button></div>
+        <div id="speakingFeedback" class="review-box"></div>
+        <div class="actions"><button id="speakingNext" class="btn primary hidden">Keyingi savol</button></div>
+      </div>
+    </section>
+
+    <section id="session" class="screen">
+      <div class="card narrow">
+        <div class="session-score">
+          <div class="eyebrow" id="sessionType"></div>
+          <h2>Seans yakunlandi</h2>
+          <div id="sessionScore" class="big-score"></div>
+          <p id="sessionSummary" class="muted"></p>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong id="sessionCorrect">0</strong><span>To‘g‘ri</span></div>
+          <div class="stat"><strong id="sessionWrong">0</strong><span>Xato</span></div>
+          <div class="stat"><strong id="sessionAccuracy">0%</strong><span>Aniqlik</span></div>
+        </div>
+        <div id="sessionWrongSection"></div>
+        <div class="actions">
+          <button id="sessionReplay" class="btn primary hidden">Xato savollarni qayta ishlash</button>
+          <button class="btn secondary" onclick="showScreen('menu')">Asosiy menyu</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="progressScreen" class="screen">
+      <div class="top-actions"><button class="btn secondary" onclick="showScreen('menu')">Orqaga</button></div>
+      <div class="card narrow">
+        <div class="eyebrow">Progress</div>
+        <h2>Mening natijalarim</h2>
+        <div class="level-large" id="progressLevel"></div>
+        <p class="muted" id="progressDescription"></p>
+        <div class="stats">
+          <div class="stat"><strong id="totalAnswered">0</strong><span>Jami savollar</span></div>
+          <div class="stat"><strong id="totalAccuracy">0%</strong><span>Umumiy aniqlik</span></div>
+          <div class="stat"><strong id="wrongCount">0</strong><span>Xato savollar</span></div>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-head"><span>Reading</span><span id="readingPct">0%</span></div><div class="bar"><span id="readingBar"></span></div></div>
+          <div class="bar-row"><div class="bar-head"><span>Speaking</span><span id="speakingPct">0%</span></div><div class="bar"><span id="speakingBar"></span></div></div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" onclick="rerunPlacement()">Darajani qayta aniqlash</button>
+          <button class="btn secondary" onclick="showScreen('menu')">Asosiy menyu</button>
+        </div>
+      </div>
+    </section>
+    <footer>English CEFR · Natijalar brauzeringizda saqlanadi</footer>
+  </main>
+</div>
+
+<script>
+const placementQuestions = [
+  {q:"My name ___ Ali.", options:["am","is","are","be"], answer:1, level:"A1", exp:"“My name is ...” shakli ishlatiladi."},
+  {q:"I ___ a student.", options:["am","is","are","be"], answer:0, level:"A1", exp:"“I” bilan “am” ishlatiladi."},
+  {q:"She ___ two brothers.", options:["have","has","having","had"], answer:1, level:"A1", exp:"“She” bilan hozirgi zamonda “has” ishlatiladi."},
+  {q:"What color is grass?", options:["Blue","Green","Red","Black"], answer:1, level:"A1", exp:"Grass odatda green, ya’ni yashil rangda bo‘ladi."},
+  {q:"Yesterday, I ___ to school by bus.", options:["go","goes","went","going"], answer:2, level:"A2", exp:"“Yesterday” o‘tgan zamonni bildiradi; “go” fe’lining Past Simple shakli “went”."},
+  {q:"He usually ___ breakfast at 7 o’clock.", options:["have","has","had","having"], answer:1, level:"A2", exp:"“He” bilan Present Simple’da “has” ishlatiladi."},
+  {q:"We were tired, ___ we went home early.", options:["because","so","but","if"], answer:1, level:"A2", exp:"Natijani bildirish uchun bu gapda “so” mos keladi."},
+  {q:"If I have enough time, I ___ you tomorrow.", options:["call","called","will call","calling"], answer:2, level:"B1", exp:"First Conditional’da if qismidan keyin Present Simple, natija qismida “will + verb” ishlatiladi."},
+  {q:"This book is ___ than the one I read last week.", options:["interesting","more interesting","most interesting","interest"], answer:1, level:"B1", exp:"Ikki narsani taqqoslashda uzun sifat bilan “more + adjective” ishlatiladi."},
+  {q:"I have lived here ___ 2020.", options:["for","since","during","from"], answer:1, level:"B1", exp:"Aniq boshlanish nuqtasi (2020) bilan Present Perfect’da “since” ishlatiladi."}
+];
+
+const readings = {
+A1:[
+ {title:"My Family",text:"My name is Tom. I live with my mother, father, and little sister. My mother likes tea, and my father likes coffee. My sister likes the color pink.",qs:[
+  {type:"mcq",q:"Who lives with Tom?",opts:["His friends","His family","His teacher","His neighbors"],a:1,e:"Matnda Tom onasi, otasi va singlisi bilan yashashi aytilgan."},
+  {type:"tf",q:"Tom’s father likes coffee.",opts:["True","False"],a:0,e:"Matnda otasi coffee yoqtirishi aniq aytilgan."},
+  {type:"gap",q:"Tom’s sister likes the color ___.",a:"pink",e:"Matnda singlisi pink rangni yoqtirishi aytilgan."}
+ ]},
+ {title:"Breakfast",text:"I get up at seven every morning. I eat bread and an egg for breakfast. I drink milk too. Then I go to school at eight o’clock.",qs:[
+  {type:"mcq",q:"What does the student drink?",opts:["Juice","Water","Milk","Tea"],a:2,e:"Nonushtada u milk, ya’ni sut ichadi."},
+  {type:"tf",q:"The student goes to school at eight.",opts:["True","False"],a:0,e:"Matnda maktabga soat sakkizda borishi aytilgan."},
+  {type:"gap",q:"The student eats bread and an ___ for breakfast.",a:"egg",e:"Non va tuxum — “bread and an egg”."}
+ ]},
+ {title:"My Room",text:"My room is small but nice. My bed is blue and my desk is white. I have three books on the desk. There is a small plant near the window.",qs:[
+  {type:"mcq",q:"What color is the bed?",opts:["White","Blue","Green","Yellow"],a:1,e:"Matnda karavot ko‘k, ya’ni blue, deb aytilgan."},
+  {type:"tf",q:"There are three books on the desk.",opts:["True","False"],a:0,e:"Matnda stol ustida uchta kitob borligi aytilgan."},
+  {type:"gap",q:"There is a small ___ near the window.",a:"plant",e:"Deraza yonida kichik plant, ya’ni o‘simlik bor."}
+ ]},
+ {title:"A School Day",text:"Anna is ten years old. She likes English and music at school. Her best friend is Sara. They eat lunch together at school.",qs:[
+  {type:"mcq",q:"How old is Anna?",opts:["Eight","Nine","Ten","Eleven"],a:2,e:"Anna ten years old — u o‘n yoshda."},
+  {type:"tf",q:"Anna and Sara eat lunch together.",opts:["True","False"],a:0,e:"Ular maktabda tushlikni birga yeyishadi."},
+  {type:"gap",q:"Anna likes English and ___.",a:"music",e:"Anna English va music fanlarini yoqtiradi."}
+ ]},
+ {title:"Fruit",text:"I like fruit. Apples are my favorite fruit because they are sweet. My brother likes bananas. We often eat fruit after dinner.",qs:[
+  {type:"mcq",q:"What is the speaker’s favorite fruit?",opts:["Bananas","Apples","Oranges","Grapes"],a:1,e:"Gapiruvchi apples, ya’ni olmalarni eng ko‘p yoqtiradi."},
+  {type:"tf",q:"The brother likes bananas.",opts:["True","False"],a:0,e:"Matnda ukasi bananlarni yoqtirishi aytilgan."},
+  {type:"gap",q:"They often eat fruit after ___.",a:"dinner",e:"Meva kechki ovqatdan keyin yeyiladi."}
+ ]}
+],
+A2:[
+ {title:"A Busy Morning",text:"Last Monday, I woke up late because my alarm did not ring. I quickly got dressed and left home without breakfast. I missed the first bus, so I walked to the station. Luckily, the next bus arrived ten minutes later.",qs:[
+  {type:"mcq",q:"Why did the speaker wake up late?",opts:["The bus was late","The alarm did not ring","The station was closed","It was Sunday"],a:1,e:"Uyg‘otgich jiringlamagani uchun u kech uyg‘ongan."},
+  {type:"tf",q:"The speaker ate breakfast before leaving home.",opts:["True","False"],a:1,e:"Matnda u nonushtasiz uydan chiqqani aytilgan."},
+  {type:"gap",q:"The speaker missed the first ___.",a:"bus",e:"U birinchi avtobusni o‘tkazib yuborgan."}
+ ]},
+ {title:"Weekend Plans",text:"My friends and I planned a picnic last weekend. We wanted to go to the park on Saturday, but it rained all morning. We changed our plan and watched a film at my house. On Sunday, the weather was sunny, so we finally went to the park.",qs:[
+  {type:"mcq",q:"What did they do on Saturday?",opts:["Went to the park","Watched a film","Played football","Visited a museum"],a:1,e:"Yomg‘ir sababli ular uyda film ko‘rishgan."},
+  {type:"tf",q:"They went to the park on Sunday.",opts:["True","False"],a:0,e:"Yakshanba kuni havo quyoshli bo‘lgan va ular parkka borishgan."},
+  {type:"gap",q:"It ___ all morning on Saturday.",a:"rained",e:"O‘tgan zamon uchun “rained” ishlatilgan."}
+ ]},
+ {title:"My Daily Routine",text:"I usually start work at nine in the morning. I check my emails and make a list of important tasks. After lunch, I often have meetings with my team. In the evening, I cook dinner and read for about thirty minutes.",qs:[
+  {type:"mcq",q:"What does the speaker do after lunch?",opts:["Goes home","Has meetings","Eats breakfast","Goes shopping"],a:1,e:"Tushlikdan keyin jamoasi bilan uchrashuvlar o‘tkazadi."},
+  {type:"tf",q:"The speaker reads in the evening.",opts:["True","False"],a:0,e:"Kechqurun taxminan 30 daqiqa kitob o‘qiydi."},
+  {type:"gap",q:"The speaker starts work at ___.",a:"nine",e:"U ishni ertalab soat to‘qqizda boshlaydi."}
+ ]},
+ {title:"A New Hobby",text:"Last year, I started learning photography. At first, taking good pictures was difficult, but I practiced every weekend. I learned how to use light and different camera settings. Now I enjoy taking pictures of nature and people.",qs:[
+  {type:"mcq",q:"When did the speaker start photography?",opts:["Last week","Last month","Last year","Two years ago"],a:2,e:"U fotografiyani o‘tgan yili boshlagan."},
+  {type:"tf",q:"Taking good pictures was easy at first.",opts:["True","False"],a:1,e:"Matnda boshida yaxshi surat olish qiyin bo‘lgani aytilgan."},
+  {type:"gap",q:"The speaker practiced every ___.",a:"weekend",e:"U har hafta oxiri mashq qilgan."}
+ ]},
+ {title:"A Small Trip",text:"Last summer, my family visited a small town near the mountains. We stayed there for three days. On the first day, we walked around the town and visited a local market. The next day, we went hiking and took many photos.",qs:[
+  {type:"mcq",q:"How long did the family stay?",opts:["One day","Two days","Three days","One week"],a:2,e:"Ular u yerda uch kun qolishgan."},
+  {type:"tf",q:"The family visited a local market.",opts:["True","False"],a:0,e:"Birinchi kuni mahalliy bozorga tashrif buyurishgan."},
+  {type:"gap",q:"They went ___ on the second day.",a:"hiking",e:"Ikkinchi kuni ular hiking, ya’ni piyoda sayrga chiqishgan."}
+ ]}
+],
+B1:[
+ {title:"Learning a Language",text:"Learning a new language can be challenging, but it can also open many opportunities. People who speak another language may communicate with more people and understand different cultures. Regular practice is important because progress usually comes from small improvements over time.",qs:[
+  {type:"mcq",q:"What can learning a new language open?",opts:["Only new hobbies","Many opportunities","Fewer conversations","More free time"],a:1,e:"Matnda til o‘rganish ko‘plab imkoniyatlarni ochishi aytilgan."},
+  {type:"tf",q:"Regular practice is important for language progress.",opts:["True","False"],a:0,e:"Matn muntazam mashq kichik, ammo doimiy rivojlanishga olib kelishini ta’kidlaydi."},
+  {type:"gap",q:"Progress usually comes from small ___ over time.",a:"improvements",e:"Matnda “small improvements” iborasi ishlatilgan."}
+ ]},
+ {title:"City or Countryside?",text:"Living in a city can be convenient because shops, schools, and public transport are usually nearby. However, cities can also be noisy and crowded. The countryside often offers more space and quiet, although services may be farther away. The best choice depends on a person’s lifestyle and priorities.",qs:[
+  {type:"mcq",q:"Why can city life be convenient?",opts:["It is always quiet","Services are usually nearby","There are no people","It has more space"],a:1,e:"Do‘kon, maktab va transport odatda yaqin bo‘lishi shaharni qulay qiladi."},
+  {type:"tf",q:"The countryside is always closer to services.",opts:["True","False"],a:1,e:"Matnda qishloqda xizmatlar uzoqroq bo‘lishi mumkinligi aytilgan."},
+  {type:"gap",q:"Cities can be noisy and ___.",a:"crowded",e:"Matnda shaharlar “noisy and crowded” deb tasvirlangan."}
+ ]},
+ {title:"The Value of Exercise",text:"Regular exercise can support both physical and mental well-being. It does not always require a gym; walking, cycling, or playing a sport can also be useful. For many people, the biggest challenge is creating a routine. Starting with manageable activities can make it easier to continue.",qs:[
+  {type:"mcq",q:"What is one challenge mentioned in the passage?",opts:["Finding a gym","Creating a routine","Buying a bicycle","Learning a sport"],a:1,e:"Matnda ko‘pchilik uchun eng katta qiyinchilik muntazam tartib yaratish ekani aytilgan."},
+  {type:"tf",q:"Exercise always requires a gym.",opts:["True","False"],a:1,e:"Matn yurish va velosiped kabi mashqlarni ham misol qiladi."},
+  {type:"gap",q:"Starting with ___ activities can make it easier to continue.",a:"manageable",e:"“Manageable activities” — bajarish osonroq, boshqariladigan mashg‘ulotlar."}
+ ]},
+ {title:"Technology and Study",text:"Digital tools can make studying more flexible. Students can use videos, dictionaries, and online exercises whenever they have time. However, technology can also create distractions. A useful approach is to choose one task, turn off unnecessary notifications, and study for a focused period.",qs:[
+  {type:"mcq",q:"What is one disadvantage of technology mentioned?",opts:["It is expensive","It creates distractions","It removes dictionaries","It stops studying"],a:1,e:"Matnda texnologiya chalg‘itishi mumkinligi aytilgan."},
+  {type:"tf",q:"Students can use digital study tools whenever they have time.",opts:["True","False"],a:0,e:"Matnda raqamli vositalardan bo‘sh vaqt mavjud bo‘lganda foydalanish mumkinligi aytilgan."},
+  {type:"gap",q:"Students can turn off unnecessary ___.",a:"notifications",e:"Chalg‘imaslik uchun keraksiz bildirishnomalarni o‘chirish tavsiya qilinadi."}
+ ]},
+ {title:"Planning for the Future",text:"Thinking about the future can help people make better decisions today. A student may want to improve their English, learn a technical skill, or prepare for university. Plans do not need to be perfect. It is often more useful to set a clear goal, take small steps, and review progress regularly.",qs:[
+  {type:"mcq",q:"What can future planning help people do?",opts:["Avoid every problem","Make better decisions today","Become perfect","Stop learning"],a:1,e:"Kelajak haqida o‘ylash bugungi qarorlarni yaxshilashga yordam berishi aytilgan."},
+  {type:"tf",q:"Plans must be perfect.",opts:["True","False"],a:1,e:"Matn rejalar mukammal bo‘lishi shart emasligini aytadi."},
+  {type:"gap",q:"It is useful to set a clear ___.",a:"goal",e:"Matnda “set a clear goal” tavsiya qilinadi."}
+ ]}
+]};
+
+const speaking = {
+A1:[
+ {q:"What is your name?",uz:"Ismingiz nima?",model:"My name is Ali. I am a student.",keywords:["name","is"],adjective:"good"},
+ {q:"How old are you?",uz:"Yoshingiz nechada?",model:"I am sixteen years old. I am a happy student.",keywords:["am","old"],adjective:"happy"},
+ {q:"What color is this?",uz:"Bu qanday rang?",model:"It is blue. Blue is my favorite color.",keywords:["is","blue"],adjective:"favorite"},
+ {q:"Do you have a pet?",uz:"Uy hayvoningiz bormi?",model:"Yes, I have a small cat. It is very cute.",keywords:["have"],adjective:"small"},
+ {q:"What do you eat for breakfast?",uz:"Nonushtaga nima yeysiz?",model:"I eat bread and eggs for breakfast. They are tasty.",keywords:["eat"],adjective:"tasty"}
+],
+A2:[
+ {q:"Describe your daily routine.",uz:"Kundalik tartibingizni tasvirlab bering.",model:"I usually wake up at seven. I have a quick breakfast and go to school. In the evening, I read a book.",keywords:["wake","have","go"],adjective:"quick"},
+ {q:"What did you do yesterday?",uz:"Kecha nima qildingiz?",model:"Yesterday, I went to school and studied English. It was a busy day.",keywords:["went","studied"],adjective:"busy"},
+ {q:"Tell me about your family.",uz:"Oilangiz haqida gapirib bering.",model:"My family is small. I live with my parents and my younger brother. We are friendly and close.",keywords:["live","family"],adjective:"small"},
+ {q:"What do you usually do at weekends?",uz:"Odatda dam olish kunlari nima qilasiz?",model:"At weekends, I usually meet my friends. We often play football and have a good time.",keywords:["usually","meet"],adjective:"good"},
+ {q:"Describe your favorite place.",uz:"Sevimli joyingizni tasvirlab bering.",model:"My favorite place is a quiet park near my home. It is beautiful and relaxing.",keywords:["is"],adjective:"quiet"}
+],
+B1:[
+ {q:"What are the advantages of learning English?",uz:"Ingliz tilini o‘rganishning qanday afzalliklari bor?",model:"Learning English has many advantages. It can help people communicate internationally, study online, and find more opportunities.",keywords:["can","help"],adjective:"many"},
+ {q:"Describe your hometown.",uz:"Tug‘ilib o‘sgan shaharingizni tasvirlab bering.",model:"My hometown is a lively place with friendly people. It has busy streets, local markets, and several interesting places to visit.",keywords:["is","has"],adjective:"lively"},
+ {q:"What would you like to do in the future?",uz:"Kelajakda nima qilishni xohlaysiz?",model:"In the future, I would like to improve my English and learn more about technology. I hope to build useful skills.",keywords:["would","like"],adjective:"useful"},
+ {q:"How can students improve their English?",uz:"O‘quvchilar ingliz tilini qanday yaxshilashlari mumkin?",model:"Students can improve their English by practicing regularly. They can read simple texts, listen to English, and speak with other learners.",keywords:["can","improve"],adjective:"simple"},
+ {q:"Do you prefer studying alone or with others?",uz:"Yolg‘iz yoki boshqalar bilan o‘qishni afzal ko‘rasizmi?",model:"I prefer studying with others because we can share ideas. It can also make difficult tasks more interesting.",keywords:["prefer","can"],adjective:"interesting"}
+]};
+
+let state = {
+ level: localStorage.getItem("cefr_level") || null,
+ progress: JSON.parse(localStorage.getItem("cefr_progress") || '{"answered":0,"correct":0,"wrong":0,"reading":{"answered":0,"correct":0},"speaking":{"answered":0,"correct":0}}'),
+ wrong: JSON.parse(localStorage.getItem("cefr_wrong") || "[]")
+};
+let placementIndex=0, placementScore=0, placementAnswered=false;
+let session={type:"",items:[],index:0,correct:0,wrong:0,answered:0,replay:false};
+let currentReading=null, currentReadingQ=0, readingAnswered=false;
+let currentSpeaking=null, speakingAnswered=false;
+
+function save(){
+ localStorage.setItem("cefr_level",state.level||"");
+ localStorage.setItem("cefr_progress",JSON.stringify(state.progress));
+ localStorage.setItem("cefr_wrong",JSON.stringify(state.wrong));
+}
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+ updateHeader();
+}
+function updateHeader(){
+ const b=document.getElementById("headerLevel");
+ if(state.level){b.style.display="inline-block";b.textContent=state.level}else b.style.display="none";
+}
+function levelText(){
+ return state.level==="A1"?"Boshlang‘ich daraja":state.level==="A2"?"Boshlang‘ichdan yuqori daraja":"O‘rta daraja";
+}
+function renderPlacement(){
+ const q=placementQuestions[placementIndex];
+ document.getElementById("placeCounter").textContent=`Savol ${placementIndex+1} / ${placementQuestions.length}`;
+ document.getElementById("placeProgress").style.width=((placementIndex)/placementQuestions.length*100)+"%";
+ document.getElementById("placeQuestion").innerHTML=`<div class="question">${escapeHTML(q.q)}</div>`;
+ document.getElementById("placeOptions").innerHTML=q.options.map((x,i)=>`<button class="option" onclick="answerPlacement(${i})">${escapeHTML(x)}</button>`).join("");
+ document.getElementById("placeFeedback").innerHTML="";
+ const btn=document.getElementById("placeNext");btn.disabled=true;btn.textContent=placementIndex===9?"Natijani ko‘rish":"Keyingi savol";
+ placementAnswered=false;
+}
+function answerPlacement(i){
+ if(placementAnswered)return; placementAnswered=true;
+ const q=placementQuestions[placementIndex];
+ if(i===q.answer)placementScore++;
+ document.querySelectorAll("#placeOptions .option").forEach((b,j)=>{b.disabled=true;if(j===q.answer)b.classList.add("correct");if(j===i&&j!==q.answer)b.classList.add("wrong")});
+ document.getElementById("placeFeedback").innerHTML=`<div class="feedback ${i===q.answer?"correct":"wrong"}"><strong>${i===q.answer?"To‘g‘ri javob":"Xato javob"}</strong>${q.exp}</div>`;
+ document.getElementById("placeProgress").style.width=((placementIndex+1)/placementQuestions.length*100)+"%";
+ document.getElementById("placeNext").disabled=false;
+}
+document.getElementById("placeNext").onclick=()=>{
+ if(!placementAnswered)return;
+ if(placementIndex<9){placementIndex++;renderPlacement();return}
+ state.level=placementScore<=4?"A1":placementScore<=7?"A2":"B1";save();
+ document.getElementById("welcomeText").textContent=`Sizning darajangiz: ${state.level} — ${levelText()}. Mashqni tanlang.`;
+ showScreen("menu");
+};
+function rerunPlacement(){
+ placementIndex=0;placementScore=0;placementAnswered=false;showScreen("placement");renderPlacement();
+}
+function startReading(){
+ const data=readings[state.level];session={type:"reading",items:shuffle([...data]).slice(0,5),index:0,correct:0,wrong:0,answered:0,replay:false};
+ currentReading=session.items[0];currentReadingQ=0;readingAnswered=false;showScreen("reading");renderReading();
+}
+function renderReading(){
+ const p=currentReading,q=p.qs[currentReadingQ];
+ document.getElementById("readingCounter").textContent=`Matn ${session.index+1} / ${session.items.length} · Savol ${currentReadingQ+1} / 3`;
+ document.getElementById("readingTitle").textContent=p.title;
+ document.getElementById("readingPassage").innerHTML=`<div class="passage-title">${p.title}</div>${p.text}`;
+ let questionHTML="";
+ if(q.type==="gap"){
+   questionHTML=`<div class="question">${q.q.replace("___",`<input id="gapInput" class="gap-input" autocomplete="off" aria-label="Javob">`)}</div>`;
+ } else questionHTML=`<div class="question">${q.q}</div>`;
+ document.getElementById("readingQuestion").innerHTML=questionHTML;
+ if(q.type!=="gap")document.getElementById("readingOptions").innerHTML=q.opts.map((x,i)=>`<button class="option" onclick="answerReading(${i})">${escapeHTML(x)}</button>`).join("");
+ else document.getElementById("readingOptions").innerHTML="";
+ document.getElementById("readingFeedback").innerHTML="";
+ const b=document.getElementById("readingNext");b.disabled=true;b.textContent=(currentReadingQ===2&&session.index===session.items.length-1)?"Seans natijasi":"Keyingi savol";
+ readingAnswered=false;
+ if(q.type==="gap"){setTimeout(()=>document.getElementById("gapInput")?.focus(),50)}
+}
+function answerReading(choice){
+ if(readingAnswered)return;readingAnswered=true;
+ const q=currentReading.qs[currentReadingQ],ok=choice===q.a;
+ finishReadingAnswer(ok,q,choice);
+ document.querySelectorAll("#readingOptions .option").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add("correct");if(j===choice&&j!==q.a)b.classList.add("wrong")});
+}
+function submitGap(){
+ if(readingAnswered)return;
+ const q=currentReading.qs[currentReadingQ],input=document.getElementById("gapInput"),value=input.value.trim().toLowerCase();
+ if(!value){input.focus();return}
+ const ok=value===q.a.toLowerCase();readingAnswered=true;finishReadingAnswer(ok,q,value);
+}
+function finishReadingAnswer(ok,q,given){
+ session.answered++; if(ok)session.correct++;else session.wrong++;
+ updateProgress("reading",ok);
+ if(!ok && !session.replay)addWrong("reading",currentReading.title,currentReadingQ,q,given);
+ document.getElementById("readingFeedback").innerHTML=`<div class="feedback ${ok?"correct":"wrong"}"><strong>${ok?"To‘g‘ri!":"Xato."}</strong>${q.e}${!ok?` To‘g‘ri javob: <b>${q.type==="gap"?escapeHTML(q.a):escapeHTML(q.opts[q.a])}</b>.`:""}</div>`;
+ document.getElementById("readingNext").disabled=false;
+}
+document.getElementById("readingNext").onclick=()=>{
+ if(!readingAnswered)return;
+ if(currentReadingQ<2){currentReadingQ++;renderReading();return}
+ if(session.index<session.items.length-1){session.index++;currentReading=session.items[session.index];currentReadingQ=0;renderReading();return}
+ endSession();
+};
+document.getElementById("gapInput")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitGap()});
+function startSpeaking(){
+ const data=speaking[state.level];session={type:"speaking",items:shuffle([...data]).slice(0,5),index:0,correct:0,wrong:0,answered:0,replay:false};
+ currentSpeaking=session.items[0];speakingAnswered=false;showScreen("speaking");renderSpeaking();
+}
+function renderSpeaking(){
+ const q=currentSpeaking;
+ document.getElementById("speakingCounter").textContent=`Savol ${session.index+1} / ${session.items.length}`;
+ document.getElementById("speakingPrompt").textContent=q.q;
+ document.getElementById("speakingTranslation").textContent=q.uz;
+ const ta=document.getElementById("speakingAnswer");ta.value="";ta.disabled=false;
+ document.getElementById("speakingSubmit").classList.remove("hidden");document.getElementById("speakingNext").classList.add("hidden");
+ document.getElementById("speakingFeedback").innerHTML="";speakingAnswered=false;
+}
+document.getElementById("speakingSubmit").onclick=()=>{
+ if(speakingAnswered)return;
+ const answer=document.getElementById("speakingAnswer").value.trim();
+ if(!answer){document.getElementById("speakingAnswer").focus();return}
+ speakingAnswered=true;const q=currentSpeaking, lower=answer.toLowerCase();
+ const hasVerb=/(^|\s)(am|is|are|have|has|do|does|did|go|went|eat|like|live|study|studied|can|will|would|prefer|improve|help|want|read|play|meet|describe)(\s|[.,!?]|$)/i.test(lower);
+ const hasAdj=new RegExp(`\\b(${q.adjective}|good|nice|small|big|happy|beautiful|quiet|busy|useful|interesting|friendly|lively|simple|tasty|favorite|many|young|old)\\b`,"i").test(lower);
+ const complete=answer.split(/\s+/).filter(Boolean).length>=4 && /[a-zA-Z]/.test(answer);
+ const checks=[["Fe’l ishlatilgan",hasVerb],["Kamida 1 ta sifat ishlatilgan",hasAdj],["Gap to‘liq tuzilgan",complete]];
+ const score=checks.filter(x=>x[1]).length;const ok=score>=2;
+ session.answered++;if(ok)session.correct++;else session.wrong++;
+ updateProgress("speaking",ok);
+ if(!ok&&!session.replay)addWrong("speaking",q.q,session.index,q,answer);
+ document.getElementById("speakingAnswer").disabled=true;document.getElementById("speakingSubmit").classList.add("hidden");
+ document.getElementById("speakingFeedback").innerHTML=`
+  <div class="feedback ${ok?"correct":"wrong"}"><strong>${ok?"Yaxshi javob!":"Yana mashq qilish kerak."}</strong>
+  Siz ${score}/3 mezonni bajardingiz.</div>
+  <div class="checklist">${checks.map(c=>`<div class="check ${c[1]?"yes":"no"}">${c[1]?"✓":"✗"} ${c[0]}</div>`).join("")}</div>
+  <p><strong>Namuna javob:</strong></p><div class="model">${escapeHTML(q.model)}</div>`;
+ document.getElementById("speakingNext").classList.remove("hidden");
+};
+document.getElementById("speakingNext").onclick=()=>{
+ if(!speakingAnswered)return;
+ if(session.index<session.items.length-1){session.index++;currentSpeaking=session.items[session.index];renderSpeaking();return}
+ endSession();
+};
+function updateProgress(type,ok){
+ state.progress.answered++;if(ok)state.progress.correct++;else state.progress.wrong++;
+ state.progress[type].answered++;if(ok)state.progress[type].correct++;save();
+}
+function addWrong(type,id,index,q,given){
+ const key=`${type}|${id}|${index}`;
+ if(!state.wrong.some(x=>x.key===key))state.wrong.push({key,type,id,index,q,given});
+ save();
+}
+function endSession(){
+ document.getElementById("sessionType").textContent=session.type==="reading"?"READING":"SPEAKING";
+ const pct=session.answered?Math.round(session.correct/session.answered*100):0;
+ document.getElementById("sessionScore").textContent=`${session.correct} / ${session.answered}`;
+ document.getElementById("sessionSummary").textContent=`Seans aniqligi: ${pct}%.`;
+ document.getElementById("sessionCorrect").textContent=session.correct;
+ document.getElementById("sessionWrong").textContent=session.wrong;
+ document.getElementById("sessionAccuracy").textContent=pct+"%";
+ const wrongs=state.wrong;
+ const sec=document.getElementById("sessionWrongSection");
+ if(wrongs.length){
+   sec.innerHTML=`<div class="review-box"><h3>Xato savollar</h3><p class="muted">Saqlangan xato savollar: ${wrongs.length} ta. Ularni yana bir marta ishlashingiz mumkin.</p><div class="wrong-list">${wrongs.slice(-8).map(w=>`<div class="wrong-item"><b>${escapeHTML(w.id)}</b><small>${escapeHTML(w.type==="reading"?"Reading":"Speaking")}</small></div>`).join("")}</div></div>`;
+   document.getElementById("sessionReplay").classList.remove("hidden");
+ }else{
+   sec.innerHTML=`<div class="empty">Hozircha xato savollar yo‘q.</div>`;
+   document.getElementById("sessionReplay").classList.add("hidden");
+ }
+ showScreen("session");
+}
+document.getElementById("sessionReplay").onclick=()=>startReplay();
+function startReplay(){
+ if(!state.wrong.length)return;
+ const items=state.wrong.slice(0,5);
+ session={type:"replay",items,index:0,correct:0,wrong:0,answered:0,replay:true};
+ currentReplay=items[0];showReplayQuestion();
+}
+let currentReplay=null;
+function showReplayQuestion(){
+ const w=currentReplay;
+ if(w.type==="reading"){
+   const q=w.q;showScreen("reading");
+   document.getElementById("readingCounter").textContent=`Xato savol ${session.index+1} / ${session.items.length}`;
+   document.getElementById("readingTitle").textContent=w.id;
+   document.getElementById("readingPassage").innerHTML=`<div class="passage-title">Qayta mashq</div>Bu savolni yana bir marta ishlang.`;
+   document.getElementById("readingQuestion").innerHTML=`<div class="question">${q.type==="gap"?q.q.replace("___",`<input id="gapInput" class="gap-input">`):q.q}</div>`;
+   document.getElementById("readingOptions").innerHTML=q.type==="gap"?"":q.opts.map((x,i)=>`<button class="option" onclick="answerReplay(${i})">${escapeHTML(x)}</button>`).join("");
+   document.getElementById("readingFeedback").innerHTML="";document.getElementById("readingNext").disabled=true;readingAnswered=false;
+   if(q.type==="gap"){const el=document.getElementById("gapInput");el.addEventListener("keydown",e=>{if(e.key==="Enter")answerReplayGap()})}
+ }else{
+   showScreen("speaking");const q=w.q;currentSpeaking=speaking[state.level].find(x=>x.q===q)||speaking[state.level][0];
+   document.getElementById("speakingCounter").textContent=`Xato savol ${session.index+1} / ${session.items.length}`;
+   document.getElementById("speakingPrompt").textContent=currentSpeaking.q;document.getElementById("speakingTranslation").textContent=currentSpeaking.uz;
+   document.getElementById("speakingAnswer").value="";document.getElementById("speakingAnswer").disabled=false;
+   document.getElementById("speakingSubmit").classList.remove("hidden");document.getElementById("speakingNext").classList.add("hidden");document.getElementById("speakingFeedback").innerHTML="";
+   speakingAnswered=false;
+ }
+}
+function answerReplay(i){
+ if(readingAnswered)return;readingAnswered=true;const w=currentReplay,q=w.q,ok=i===q.a;
+ document.querySelectorAll("#readingOptions .option").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add("correct");if(j===i&&j!==q.a)b.classList.add("wrong")});
+ session.answered++;if(ok)session.correct++;else session.wrong;
+ if(ok)removeWrong(w.key);
+ document.getElementById("readingFeedback").innerHTML=`<div class="feedback ${ok?"correct":"wrong"}"><strong>${ok?"To‘g‘ri! Xato savol ro‘yxatdan olib tashlandi.":"Hali ham xato."}</strong>${q.e}</div>`;
+ document.getElementById("readingNext").disabled=false;document.getElementById("readingNext").onclick=nextReplay;
+}
+function answerReplayGap(){
+ if(readingAnswered)return;const w=currentReplay,q=w.q,v=document.getElementById("gapInput").value.trim().toLowerCase();if(!v)return;
+ readingAnswered=true;const ok=v===q.a.toLowerCase();session.answered++;if(ok){session.correct++;removeWrong(w.key)}else session.wrong++;
+ document.getElementById("readingFeedback").innerHTML=`<div class="feedback ${ok?"correct":"wrong"}"><strong>${ok?"To‘g‘ri! Xato savol ro‘yxatdan olib tashlandi.":"Hali ham xato."}</strong>${q.e}</div>`;
+ document.getElementById("readingNext").disabled=false;document.getElementById("readingNext").onclick=nextReplay;
+}
+function nextReplay(){
+ if(session.index<session.items.length-1){session.index++;currentReplay=session.items[session.index];showReplayQuestion();return}
+ endSession();
+}
+function removeWrong(key){state.wrong=state.wrong.filter(x=>x.key!==key);save()}
+function showProgress(){
+ const p=state.progress;
+ document.getElementById("progressLevel").textContent=state.level||"A1";
+ document.getElementById("progressDescription").textContent=levelText();
+ document.getElementById("totalAnswered").textContent=p.answered;
+ document.getElementById("totalAccuracy").textContent=(p.answered?Math.round(p.correct/p.answered*100):0)+"%";
+ document.getElementById("wrongCount").textContent=state.wrong.length;
+ const rp=p.reading.answered?Math.round(p.reading.correct/p.reading.answered*100):0;
+ const sp=p.speaking.answered?Math.round(p.speaking.correct/p.speaking.answered*100):0;
+ document.getElementById("readingPct").textContent=rp+"%";document.getElementById("readingBar").style.width=rp+"%";
+ document.getElementById("speakingPct").textContent=sp+"%";document.getElementById("speakingBar").style.width=sp+"%";
+ showScreen("progressScreen");
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+
+document.getElementById("welcomeText").textContent=state.level?`Sizning darajangiz: ${state.level} — ${levelText()}. Mashqni tanlang.`:"";
+updateHeader();
+if(state.level){showScreen("menu")}else{showScreen("placement");renderPlacement()}
+</script>
+</body>
+</html>
